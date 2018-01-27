@@ -1,7 +1,7 @@
 {
   "name": "pmforum-smart-preview",
   "id": "pmforum-smart-preview@Off.JustOff",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "title": "Smart Preview for Pale Moon forum",
   "description": "Quick preview of forum content using a popup frame",
   "author": "Off JustOff <Off.Just.Off@gmail.com>",
