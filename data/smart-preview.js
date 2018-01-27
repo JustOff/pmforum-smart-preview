@@ -1,7 +1,7 @@
 var linkObj, isCtrlDown = false;
 
 function hide_preview(e) {
-  if (e.data.key == "newtab") {
+  if (e && e.data.key == "newtab") {
     window.open($('#previewframe').attr('src'), '_blank');
   }
   $('#previewframe').remove();
@@ -21,6 +21,21 @@ function hide_preview(e) {
   linkObj = null;
 }
 
+function show_iframe(href) {
+  $('#previewdiv').append($('<iframe>', {id: "previewframe", src: href}));
+  $('#previewdiv, #closediv, #newtabdiv').show();
+  $('#previewframe').on("load", function(){
+    $(document.getElementById("previewframe").contentWindow.document).on("keydown", function(e) {
+      if (e.key == "Escape"){
+        el = document.getElementById("previewframe").contentWindow.document.activeElement.tagName;
+        if (el != "INPUT" && el != "TEXTAREA") {
+          hide_preview();
+        }
+      }
+    });
+  });
+}
+
 function show_preview(e) {
   var el = document.elementFromPoint(e.clientX, e.clientY);
   if (e.data.key == '.topictitle' || e.data.key == 'a[href*="&p="]') {
@@ -38,8 +53,7 @@ function show_preview(e) {
       if (href && href.indexOf("#") == -1 && this.className.match(/icon .+?_unread/)) {
         href += "&view=unread#unread";
       }
-      $('#previewdiv').append($('<iframe>', {id: "previewframe", src: href}));
-      $('#previewdiv, #closediv, #newtabdiv').show();
+      show_iframe(href);
       return false;
     });
   } else if (e.data.key == 'search') {
@@ -48,8 +62,7 @@ function show_preview(e) {
     }
     $(this).find('a[href*="&p="]').each(function() {
       linkObj = $(this);
-      $('#previewdiv').append($('<iframe>', {id: "previewframe", src: this.href}));
-      $('#previewdiv, #closediv, #newtabdiv').show();
+      show_iframe(this.href);
       return false;
     });
   } else if (e.data.key == 'notification') {
@@ -66,13 +79,11 @@ function show_preview(e) {
     } else {
       return;
     }
-    $('#previewdiv').append($('<iframe>', {id: "previewframe", src: href}));
-    $('#previewdiv, #closediv, #newtabdiv').show();
+    show_iframe(href);
   } else if (e.data.key == 'href') {
     if (e.ctrlKey && is_pmforum.call(this)) {
       linkObj = $(this);
-      $('#previewdiv').append($('<iframe>', {id: "previewframe", src: this.href}));
-      $('#previewdiv, #closediv, #newtabdiv').show();
+      show_iframe(this.href);
     } else {
       return;
     }
@@ -85,11 +96,13 @@ function is_pmforum() {
     && this.href.split("#")[0] != window.location.href.split("#")[0];
 }
 
-function check_ctrl(e) {
+function handle_key(e) {
   if (e.data.key == "down") {
     if (e.ctrlKey && !isCtrlDown) {
       isCtrlDown = true;
       $("a").filter(is_pmforum).toggleClass("rclickview", true);
+    } else if (e.key == "Escape") {
+      hide_preview();
     }
   } else {
     if (isCtrlDown) {
@@ -108,8 +121,8 @@ $(document).ready(function() {
   $(".search.post > .inner").on("click", {key: 'search'}, show_preview);
   $(".notification-block > .notification_text, .notifications").on("click", {key: 'notification'}, show_preview);
   $("a").on("contextmenu", {key: 'href'}, show_preview);
-  $(document).on("keydown", {key: 'down'}, check_ctrl);
-  $(document).on("keyup", {key: 'up'}, check_ctrl);
+  $(document).on("keydown", {key: 'down'}, handle_key);
+  $(document).on("keyup", {key: 'up'}, handle_key);
 });
 
 self.port.on("detach", function() {
