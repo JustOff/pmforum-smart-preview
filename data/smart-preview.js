@@ -120,6 +120,6 @@ self.port.on("detach", function() {
   $(".search.post > .inner").off();
   $(".notification-block > .notification_text, .notifications").off();
   $("a").off();
-  $(document).off();
+  try { $(document).off(); } catch(e) {}
   $('#closediv, #newtabdiv, #previewdiv').remove();
 });
