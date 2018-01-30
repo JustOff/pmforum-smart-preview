@@ -113,6 +113,7 @@ function handle_key(e) {
 }
 
 $(document).ready(function() {
+  $('#nav-breadcrumbs').append('<li class="small-icon icon-search-unanswered rightside smart-preview"><a href="./search.php?search_id=unanswered" role="menuitem">Unanswered posts</a></li><li class="small-icon icon-search-active rightside smart-preview"><a href="./search.php?search_id=active_topics" role="menuitem">Active topics</a></li>');
   $('body').append($('<div>', {id: "previewdiv"}), $('<div>', {id: "closediv"}), $('<div>', {id: "newtabdiv"}));
   $('#closediv').on("click", {key: 'close'}, hide_preview);
   $('#newtabdiv').on("click", {key: 'newtab'}, hide_preview);
@@ -134,5 +135,5 @@ self.port.on("detach", function() {
   $(".notification-block > .notification_text, .notifications").off();
   $("a").off();
   try { $(document).off(); } catch(e) {}
-  $('#closediv, #newtabdiv, #previewdiv').remove();
+  $('#closediv, #newtabdiv, #previewdiv, li.smart-preview').remove();
 });
