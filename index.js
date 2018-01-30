@@ -13,5 +13,5 @@ pageMod.PageMod({
 pageMod.PageMod({
   include: "https://forum.palemoon.org/*",
   attachTo: "frame",
-  contentStyle: "#page-header, #page-footer {display: none;}"
+  contentStyle: "#page-header, #page-footer {display: none;} html {height: 100%;} body.section-viewonline th.active {width: 20%;}"
 });
