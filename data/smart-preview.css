@@ -1,5 +1,5 @@
 .topics .list-inner, .pmlist .list-inner, .lastpost  > span, .search.post > .inner,
-.notification-block  > .notification_text, .notifications {
+.notification-block  > .notification_text, .notifications, #iou-list a {
   cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAjVBMVEUAAABSmeJNk+BNlOBSmOJaouZRmeJYoOVIjt5cpOZqsutVmuVWnOZDidtZoeVIjt5bouZOleBVneNFi9xcpOZFi9xHjd1Mk99Fi9xcpOZXn+RCiNtDiNtpsetqsetAhdpfpOx5wvJlqu50u+9ute4Wb9QabM4daMl5vPpboOgdfN1Fi9wbddYhZcMkY775jfcHAAAAIHRSTlMABg1R+BoSVRj58/Pr2dPTz8fDwsGxeW5ubGxO+e3rCMgm9vgAAACXSURBVBjTbY1XDoMwEEQXG5veO2lgg02///GS2EHiI0/aj3k70sA/jCZ3nLwxzkziXhGT3z/sXYsQy+1D3Wn5g8I4An3yVomUW/AVgHmqhDkgIZZFCDSYp5By26Q8RcIwwL4DYJYoUTGfwnEA9VmlZyPmYdvGHmMlKOyo00xdgXSnztY1q8t56gIDLhTz/QZXUKDyhdfn3mO4DAI3GV+/AAAAAElFTkSuQmCC') 5 5, zoom-in;
 }
 
@@ -50,6 +50,32 @@
   border-bottom: 1px solid;
   background: rgba(89,179,255,0.3);
   display: none;
+}
+
+#iou-list {
+  float: right;
+  font-size: 11px;
+  font-family: Verdana,Helvetica,Arial,sans-serif;
+  padding-right: 2px;
+  overflow: hidden;
+  max-width: 60%;
+  max-height: 48px;
+}
+
+#iou-list a:hover {
+  text-decoration: none;
+  background-color: WhiteSmoke;
+}
+
+#iou-head {
+  float: left;
+  height: 48px;
+  margin-right: 5px;
+}
+
+.hg-wsnowrap{
+  font-style: italic;
+  white-space: nowrap;
 }
 
 #site-description > h1 {

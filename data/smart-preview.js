@@ -80,8 +80,15 @@ function show_preview(e) {
       return;
     }
     show_iframe(href);
-  } else if (e.data.key == 'href') {
+  } else if (e.data.key == 'href-context') {
     if (e.ctrlKey && is_pmforum.call(this)) {
+      linkObj = $(this);
+      show_iframe(this.href);
+    } else {
+      return;
+    }
+  } else if (e.data.key == 'href-normal') {
+    if (!e.ctrlKey && !e.shiftKey && is_pmforum.call(this)) {
       linkObj = $(this);
       show_iframe(this.href);
     } else {
@@ -112,6 +119,35 @@ function handle_key(e) {
   }
 }
 
+function who_online() {
+  $("#iou-list").remove();
+  $.ajax({url: './index.php', dataType: 'html', success: function(response) {
+    var span = $('<span id="iou-list"><span id="iou-head"><a href="./viewonline.php">Online users</a>:</span></span>');
+    var ulist = "";
+    var olist = $(response).find('.online-list');
+    olist.find('.username, .username-coloured').each(function() {
+      if (this.style.color != "rgb(170, 119, 119)" && this.firstChild.nodeName != "EM") {
+        span.append(this).append(document.createTextNode(', '));
+        ulist += this.textContent + ", ";
+      }
+    });
+    olist.find('p').each(function() {
+      var hg = this.textContent.match(/(\d+ hidden) and (\d+ guests)/);
+      if (hg) {
+        span.append($('<span class="hg-wsnowrap">' + hg[1] + '</span>'));
+        span.append(document.createTextNode(', '));
+        span.append($('<span class="hg-wsnowrap">' + hg[2] + '</span>'));
+        ulist += hg[1] + ", " + hg[2];
+      }
+      return false;
+    });
+    $("#page-body > h2").append(span);
+    $("#iou-head").attr("title", ulist);
+    $("#iou-head").on("click", who_online);
+    $("#iou-list a").on("click", {key: 'href-normal'}, show_preview);
+  }});
+}
+
 $(document).ready(function() {
   $('#nav-breadcrumbs').append('<li class="small-icon icon-search-unanswered rightside smart-preview"><a href="./search.php?search_id=unanswered" role="menuitem">Unanswered posts</a></li><li class="small-icon icon-search-active rightside smart-preview"><a href="./search.php?search_id=active_topics" role="menuitem">Active topics</a></li>');
   $('#site-description > p:first-of-type').append('<span class="smart-preview"><br>Explore <a href="https://addons.palemoon.org/extensions/" target="_blank" style="color:yellow;">Extensions</a> and <a href="https://addons.palemoon.org/themes/" target="_blank" style="color:yellow;">Themes</a></span>');
@@ -122,13 +158,16 @@ $(document).ready(function() {
   $(".lastpost > span").on("click", {key: 'a[href*="&p="]'}, show_preview);
   $(".search.post > .inner").on("click", {key: 'search'}, show_preview);
   $(".notification-block > .notification_text, .notifications").on("click", {key: 'notification'}, show_preview);
-  $("a").on("contextmenu", {key: 'href'}, show_preview);
+  $("a").on("contextmenu", {key: 'href-context'}, show_preview);
   $(document).on("keydown", {key: 'down'}, handle_key);
   $(document).on("keyup", {key: 'up'}, handle_key);
+  if ($("#username_logged_in").length && $("#page-body > h2").length && window.location.href.indexOf("viewonline.php") == -1) {
+    who_online();
+  }
 });
 
 self.port.on("detach", function() {
-  $('#closediv, #newtabdiv, #previewdiv, li.smart-preview, span.smart-preview').remove();
+  $('#closediv, #newtabdiv, #previewdiv, #iou-list, li.smart-preview, span.smart-preview').remove();
   $(".topics .list-inner, .pmlist .list-inner").off();
   $(".lastpost > span").off();
   $(".search.post > .inner").off();
