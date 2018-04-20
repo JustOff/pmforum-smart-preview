@@ -85,3 +85,7 @@
 #site-description > p {
   margin-bottom: 1px;
 }
+
+ h2.posting-title {
+   overflow: auto;
+}
