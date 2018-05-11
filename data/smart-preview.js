@@ -21,7 +21,8 @@ function hide_preview(e) {
   linkObj = null;
 }
 
-function show_iframe(href) {
+function show_iframe(href, title = "") {
+  self.port.emit('update_history', href, title);
   $('#previewdiv').append($('<iframe>', {id: "previewframe", src: href}));
   $('#previewdiv, #closediv, #newtabdiv').show();
   $('#previewframe').on("load", function(){
@@ -53,7 +54,7 @@ function show_preview(e) {
       if (href && href.indexOf("#") == -1 && this.className.match(/icon .+?_unread/)) {
         href += "&view=unread#unread";
       }
-      show_iframe(href);
+      show_iframe(href, linkObj.text());
       return false;
     });
   } else if (e.data.key == 'search') {
@@ -62,7 +63,7 @@ function show_preview(e) {
     }
     $(this).find('a[href*="&p="]').each(function() {
       linkObj = $(this);
-      show_iframe(this.href);
+      show_iframe(this.href, linkObj.text());
       return false;
     });
   } else if (e.data.key == 'notification') {
@@ -79,18 +80,18 @@ function show_preview(e) {
     } else {
       return;
     }
-    show_iframe(href);
+    show_iframe(href, linkObj.text());
   } else if (e.data.key == 'href-context') {
     if (e.ctrlKey && is_pmforum.call(this)) {
       linkObj = $(this);
-      show_iframe(this.href);
+      show_iframe(this.href, linkObj.text());
     } else {
       return;
     }
   } else if (e.data.key == 'href-normal') {
     if (!e.ctrlKey && !e.shiftKey && is_pmforum.call(this)) {
       linkObj = $(this);
-      show_iframe(this.href);
+      show_iframe(this.href, linkObj.text());
     } else {
       return;
     }
