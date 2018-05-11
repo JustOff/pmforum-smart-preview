@@ -121,10 +121,13 @@ function handle_key(e) {
 
 function who_online() {
   $("#iou-list").remove();
-  $.ajax({url: './index.php', dataType: 'html', success: function(response) {
+  var request = new XMLHttpRequest({mozAnon: true});
+  request.open("GET", "https://forum.palemoon.org/index.php");
+  request.responseType = "document";
+  request.onload = function() {
     var span = $('<span id="iou-list"><span id="iou-head"><a href="./viewonline.php">Online users</a>:</span></span>');
     var ulist = "";
-    var olist = $(response).find('.online-list');
+    var olist = $(this.responseXML).find('.online-list');
     olist.find('.username, .username-coloured').each(function() {
       if (this.style.color != "rgb(170, 119, 119)" && this.firstChild.nodeName != "EM") {
         span.append(this).append(document.createTextNode(', '));
@@ -145,7 +148,8 @@ function who_online() {
     $("#iou-head").attr("title", ulist);
     $("#iou-head").on("click", who_online);
     $("#iou-list a").on("click", {key: 'href-normal'}, show_preview);
-  }});
+  }
+  request.send();
 }
 
 $(document).ready(function() {
