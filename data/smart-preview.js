@@ -47,9 +47,11 @@ function show_preview(e) {
       var href;
       $(this).css("background-color", "LightSteelBlue");
       $(this).find(e.data.key).each(function() {
-        href = this.href;
-        linkObj = $(this);
-        return false;
+        if (!this.title || this.title != "Topic is solved") {
+          href = this.href;
+          linkObj = $(this);
+          return false;
+        }
       });
       if (href && href.indexOf("#") == -1 && this.className.match(/icon .+?_unread/)) {
         href += "&view=unread#unread";
