@@ -9,7 +9,7 @@ pageMod.PageMod({
   include: "https://forum.palemoon.org/*",
   attachTo: ["existing", "top"],
   contentStyleFile: self.data.url("smart-preview.css?" + self.version),
-  contentScriptFile: [self.data.url("jquery-3.3.1.slim.min.js"), 
+  contentScriptFile: [self.data.url("jquery-3.4.0.slim.min.js"), 
                       self.data.url("smart-preview.js?" + self.version)],
   onAttach: previewListener
 });
