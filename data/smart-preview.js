@@ -11,7 +11,7 @@ function hide_preview(e) {
     setTimeout(function() {
       $(that).css("background-color", "");
     }, 700);
-    if (this.className.match(/icon .+?_unread/)
+    if (this.className.match(/item .+?_unread/)
         && (linkObj.prop("href").indexOf("#") != -1 || linkObj.attr("class") == "topictitle")) {
       this.className = this.className.replace("_unread", "_read");
       $(this).children("dt").attr("title", "There are no new unread posts for this topic.");
@@ -53,7 +53,7 @@ function show_preview(e) {
           return false;
         }
       });
-      if (href && href.indexOf("#") == -1 && this.className.match(/icon .+?_unread/)) {
+      if (href && href.indexOf("#") == -1 && this.className.match(/item .+?_unread/)) {
         href += "&view=unread#unread";
       }
       show_iframe(href, linkObj.text());
@@ -124,7 +124,7 @@ function handle_key(e) {
 
 function who_online() {
   $("#iou-list").remove();
-  var request = new XMLHttpRequest({mozAnon: true});
+  var request = new XMLHttpRequest(/* {mozAnon: true} */);
   request.open("GET", "https://forum.palemoon.org/index.php");
   request.responseType = "document";
   request.onload = function() {
@@ -156,7 +156,7 @@ function who_online() {
 }
 
 $(document).ready(function() {
-  $('#nav-breadcrumbs').append('<li class="small-icon icon-search-unanswered rightside smart-preview"><a href="./search.php?search_id=unanswered" role="menuitem">Unanswered posts</a></li><li class="small-icon icon-search-active rightside smart-preview"><a href="./search.php?search_id=active_topics" role="menuitem">Active topics</a></li>');
+  $('#nav-breadcrumbs').append('<li class="rightside"><a href="./search.php?search_id=unanswered" role="menuitem"><i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered posts</span></a></li><li class="rightside"><a href="./search.php?search_id=active_topics" role="menuitem"><i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Active topics</span></a></li>');
   $('#site-description > p:first-of-type').append('<span class="smart-preview"><br>Explore <a href="https://addons.palemoon.org/extensions/" target="_blank" style="color:yellow;">Extensions</a> and <a href="https://addons.palemoon.org/themes/" target="_blank" style="color:yellow;">Themes</a></span>');
   $('body').append($('<div>', {id: "previewdiv"}), $('<div>', {id: "closediv"}), $('<div>', {id: "newtabdiv"}));
   $('#closediv').on("click", {key: 'close'}, hide_preview);
