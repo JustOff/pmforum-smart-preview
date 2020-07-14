@@ -34,5 +34,5 @@ function previewListener(worker) {
 pageMod.PageMod({
   include: "https://forum.palemoon.org/*",
   attachTo: "frame",
-  contentStyle: "#page-header, #page-footer {display: none;} html {height: 100%;} body.section-viewonline th.active {width: 20%;}"
+  contentStyle: "#page-header, #page-footer {display: none;} html {height: 100%;} body.section-viewonline th.active {width: 20%;} #page-body .rules {height: 1.2em; overflow: hidden; width: -moz-min-content;} #page-body .rules:hover {height: auto; width: auto;}"
 });

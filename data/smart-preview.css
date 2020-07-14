@@ -89,3 +89,18 @@
  h2.posting-title {
    overflow: auto;
 }
+
+#page-body div:first-of-type {
+  min-height: 16px;
+}
+
+#page-body .rules {
+  height: 1.2em;
+  overflow: hidden;
+  width: -moz-min-content;
+}
+
+#page-body .rules:hover {
+  height: auto;
+  width: auto;
+}
