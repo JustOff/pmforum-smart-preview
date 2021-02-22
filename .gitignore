@@ -1,4 +1,5 @@
 *.xpi
+*.exe
 bootstrap.js
 install.rdf
 work

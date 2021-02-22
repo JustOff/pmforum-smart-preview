@@ -1,5 +1,8 @@
 .*
 *.xpi
 *.md
+*.exe
+release.cmd
+update.xml
 LICENSE
 work
