@@ -1,5 +1,5 @@
 @echo off
-set VER=1.3.4
+set VER=1.3.5
 
 sed -i -E "s/\"version\": \".+?\"/\"version\": \"%VER%\"/; s/\"name\": \".+?\"/\"name\": \"pmforum-smart-preview-%VER%\"/" package.json
 sed -i -E "s/version>.+?</version>%VER%</; s/download\/.+?\/pmforum-smart-preview-.+?\.xpi/download\/%VER%\/pmforum-smart-preview-%VER%\.xpi/" update.xml
