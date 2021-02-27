@@ -1,4 +1,4 @@
-## Smart Preview for Pale Moon forum
+### [<sub>⬇</sub> Smart Preview for Pale Moon forum](https://github.com/JustOff/pmforum-smart-preview/releases)
 
 This add-on is designed for quick preview of forum content using a popup frame. When you hover over a field containing a link to a topic or a single post, the cursor icon changes, indicating that you can preview this item by clicking the left mouse button. A further click outside the preview area or pressing the Esc key will close it, and clicking on the small rectangle in the upper right corner will open the content in a new tab.
 
